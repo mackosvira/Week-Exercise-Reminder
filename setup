@@ -6,6 +6,12 @@ exec_types=(study scales songs exercises new_songs)
 
 
 function cr_file() {
+    
+    # create generic text files in "list" directory for test purposes
+    #   - separate text file for each type of exercise (in exec_type)
+    #   - each text file contains 10 different exercises
+    # Exact exercise can be edited with text editor
+
     local d11=$1
     for name in ${exec_types[@]}; do
         i=1
@@ -18,6 +24,12 @@ function cr_file() {
 
 
 function random_timestamp() {
+    
+    # create generic text files in "status" directory for test purposes
+    #   - copy files from "list" directory
+    #   - add random timestamp at the end of each line
+    # No additional edit if exact exercise are already done in "list" directory
+
         local d11=$1
         local d22=$2
                 
@@ -30,12 +42,14 @@ function random_timestamp() {
 }
 
 
-
 function setup1() {
-    local d1=$1
-    local d2=$2
+
     # check if dir1 (list) or dir2 (status) directories exist
     # and create if not
+
+    local d1=$1
+    local d2=$2
+
     if [ ! -d "$d1" ]; then 
         mkdir $d1
         cr_file $d1
@@ -46,7 +60,12 @@ function setup1() {
     fi
 }
 
+
 function setup2() {
+
+    # check if dir1 (list) or dir2 (status) directories are empty
+    # and create files first in "list" and then in "status" directory
+
     local dd1=$1
     local dd2=$2
     if [ -z "$(ls -A "$dd1")" ]; then

@@ -27,6 +27,7 @@ if [ ! -d "$dir1" ] || [ ! -d "$dir2" ]; then
     setup1 $dir1 $dir2
 fi
 
+
 # check if "list" or "status" directories does not have files
 # and call "setup" function
 if [ -z "$(ls -A "$dir1")" ] || [ -z "$(ls -A "$dir2")" ]; then
