@@ -38,19 +38,16 @@ This script can be easily used for physical exetcises, divided in several types:
 
 > After initial setup, it will create first weekly plan stored in file
 
-## Normal startup
+### Normal startup
 > Shows list of exercise types, to select with wich one to proceed
 
 > After seclected type, show exercises planned for current week, with option to set completed or return to main list menu
 
 > If weekplan is > 7days, to prompt for deletion of existing plan and create new one
 
+> New excercises and types can be added via text file editor, or via setup fuction at later stage,  
+
 
 ## Comments
 Under construction at this moment.
 The script is needed for practical reasons, but also for learning and bring in shape my already forgoten bash scripting knowledge.
-
-
-
-
-

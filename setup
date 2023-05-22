@@ -1,0 +1,60 @@
+#!/bin/bash
+
+
+# define initial exercise types
+exec_types=(study scales songs exercises new_songs)
+
+
+function cr_file() {
+    local d11=$1
+    for name in ${exec_types[@]}; do
+        i=1
+        while [ $i -lt 11 ]; do
+            echo "$name - exercise $i" >> ./$d11/"$name".txt
+            i=$(( $i + 1 ))
+        done
+    done
+}
+
+
+function random_timestamp() {
+        local d11=$1
+        local d22=$2
+                
+        for file in $d11/*; do
+	        filename=`echo $file | cut -d/ -f3`
+            sed 's/$/:/' $file > "$filename".1
+	        shuf "$filename".1 | awk -v var1="$(date +%s)" '{print $0, var1-(NR-1)*86400}' > ./$d22/$filename
+	        rm "$filename".1
+        done
+}
+
+
+
+function setup1() {
+    local d1=$1
+    local d2=$2
+    # check if dir1 (list) or dir2 (status) directories exist
+    # and create if not
+    if [ ! -d "$d1" ]; then 
+        mkdir $d1
+        cr_file $d1
+    fi
+
+    if [ ! -d "$d2" ]; then
+        mkdir $d2
+    fi
+}
+
+function setup2() {
+    local dd1=$1
+    local dd2=$2
+    if [ -z "$(ls -A "$dd1")" ]; then
+        echo "directory $dd1 is empty"
+        cr_file $dd1
+    fi
+
+    if [ -z "$(ls -A "$dd2")" ]; then
+        random_timestamp $dd1 $dd2
+    fi
+}

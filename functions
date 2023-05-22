@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+function new_weekly_plan() {
+    echo "New Weekly plan - under construction"
+}
+
+
+function old_plan() {
+    echo "Old Weekly plan replace with new - under construction"
+}
+
+
+function list_types() {
+    echo "list_types function - under construction"
+}
+
+
+function show_plan() {
+    echo show plan function
+}
+
+
+function completed() {
+    echo mark completed function
+}
