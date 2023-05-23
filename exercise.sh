@@ -37,7 +37,7 @@ fi
 
 
 # check if weekly plan exists and create if not
-new_weekly_plan $week_plan
+new_weekly_plan $week_plan $dir1
 
 
 # check if week plan is older than 7 days and recreate new plan
@@ -48,5 +48,11 @@ old_plan $week_plan
 while grep -q "Not Started" $week_plan
 do
 	echo "list types of excercise (check)"
-	list_types
+#	list_types
+	env DISPLAY=:0.0 /usr/bin/zenity --text-info \
+    --filename=$week_plan \
+    --text="Week plan of execrcises:" \
+    --width=700 --height=700
+    exit
+
 done

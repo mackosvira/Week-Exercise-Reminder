@@ -2,7 +2,43 @@
 
 
 function new_weekly_plan() {
-    echo "New Weekly plan - under construction"
+
+	# Create a weekly plan schedule by selecting:
+	#   - 2x oldest exercises from each type of exercises
+
+ 	local file0=$1		# week_plan.txt
+	local d0=$2		# directory of listed exercise type files
+	local name=""		# extract the name of file from exercise files
+	local dept=0		# exctract number of dept of the d0 directory (for cut cmd)
+
+#    echo "New Weekly plan - under construction"
+   	echo "Execute new_weekly_plan function:"
+	
+    # Check if file exists, if not creates with 2x execrciese per type
+    if [ ! -f "$file0" ]; then
+		# create the file together with list of exercises selected from exercise files lists
+		dept=`echo $d0 | grep -o '/' | wc -l`
+        dept=$(($dept + 2))
+    #   echo $d0
+    #   echo $dept
+        for file in $d0/*.txt
+		do
+			name="`echo $file | cut -d/ -f"$dept" | cut -d. -f1`"
+	#		echo $file
+    #       echo $name
+            sort -t ':' -k2 $file | head -n 2 | cut -d: -f1 | sed "s/^/$name:/" >> $file0
+#			echo $name
+		done
+		# add "Not Started" to all exercises
+		sed -i 's/$/:Not Started/' $file0
+		printf "%4s-new weekly plan file \"$file0\" created\n"
+		echo
+		
+	else
+		printf "%4s-weekly plan \"$file0\" already exist\n"
+		echo
+	fi
+   
 }
 
 
