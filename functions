@@ -43,7 +43,32 @@ function new_weekly_plan() {
 
 
 function old_plan() {
-    echo "Old Weekly plan replace with new - under construction"
+	# check if weekplan is older than 7 days and ask to create new plan or continue with old one
+	local file1=$1		# week_plan.txt
+	local d1=$2
+	local now=$(date +%s)
+	local file_date=$(stat -c %W "$file1")
+	local file_dif=$(($now - $file_date))
+	local file_days=$(($file_dif / 86400))
+#	echo "Execute old_plan function:"
+
+	# check if file creation date is older then 7 days and recreate a new week plan if confirmed 
+	if [ "$file_days" -ge 7 ]; then
+		# delete the file    
+		if env DISPLAY=:0.0 /usr/bin/zenity --question \
+		--text="Week Plan is older than 7 days, do you want to create new plan?" \
+		--ok-label "Create new plan" --cancel-label "Continue with existing plan";
+		then
+			rm "$file1"
+#			printf "%4s-the old weekly plan \"$file1\" deleted\n"
+			new_weekly_plan $file1 $d1
+			printf "%4s-new weekly plan \"$file1\" created\n"
+			echo
+		fi
+	else
+#		printf "%4s-week plan is not older then 7 days\n"
+		echo
+	fi
 }
 
 
