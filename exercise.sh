@@ -41,7 +41,7 @@ new_weekly_plan $week_plan $dir1
 
 
 # check if week plan is older than 7 days and recreate new plan
-old_plan $week_plan
+old_plan $week_plan $dir1
 
 
 # main cycle until all exercises are not completed or until exit by user
