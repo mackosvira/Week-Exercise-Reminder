@@ -48,11 +48,8 @@ old_plan $week_plan $dir1
 while grep -q "Not Started" $week_plan
 do
 	echo "list types of excercise (check)"
-#	list_types
-	env DISPLAY=:0.0 /usr/bin/zenity --text-info \
-    --filename=$week_plan \
-    --text="Week plan of execrcises:" \
-    --width=700 --height=700
+    list_types
+	
     exit
 
 done

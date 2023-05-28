@@ -73,12 +73,38 @@ function old_plan() {
 
 
 function list_types() {
-    echo "list_types function - under construction"
+#	echo "Execute list_types function"
+	
+	local item=`env DISPLAY=:0.0 /usr/bin/zenity --list \
+	--title="Select exercise type" \
+	--column="Types of excercise:" "${exec_types[@]}" \
+	--width=250 --height=300 \
+	--ok-label "Continue" --cancel-label "Exit"   \
+	--hide-column=0`
+	
+	if [ -z "$item" ]
+	then
+		env DISPLAY=:0.0 /usr/bin/zenity --question \
+		--text="No selection made, do you want to exit?" \
+		&& exit || return
+	else
+		show_plan $week_plan $item
+	fi
 }
 
 
 function show_plan() {
+	local file2=$1		# week_plan.txt
+	local type=$2		# the line number of exercise that is completed
+	local num
+	local n=0
+
     echo show plan function
+	env DISPLAY=:0.0 /usr/bin/zenity --text-info \
+    --filename=$week_plan \
+    --text="Week plan of execrcises:" \
+    --width=700 --height=700
+
 }
 
 
