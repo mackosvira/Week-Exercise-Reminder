@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-# define initial exercise types
-exec_types=(study scales songs exercises new_songs)
-
-
 function cr_file() {
     
     # create generic text files in "list" directory for test purposes

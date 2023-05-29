@@ -1,24 +1,30 @@
 #!/bin/bash
 
+
 # bash script that create and reming on weekly exercises plan
+
+
+# Define initial exercise types:
+exec_types=(study scales songs exercises new_songs)
+
+# Different types of exercises may be defined:
+# exec_types=(indoor, outdoor, gym, sports, other)
+
+
+# Define weekly plan file location and name.
+# The file will be created if does not exist.
+week_plan="./week_plan.txt"
+
+
+# Define "list" and "status" directories names.
+# Directories will be created if does not exist
+dir1="./list"
+dir2="./status"
 
 
 # call functions files
 . setup
 . functions
-
-
-# define initial exercise types - defined in "setup" file:
-# exec_types=(study scales songs exercises new_songs)
-
-
-# define weekly plan file location and name
-week_plan="./week_plan.txt"
-
-
-# define "list" and "status" directories names:
-dir1="./list"
-dir2="./status"
 
 
 # check if "list" or "status" directories exist
