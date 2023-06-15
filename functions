@@ -95,15 +95,43 @@ function list_types() {
 
 function show_plan() {
 	local file2=$1		# week_plan.txt
-	local type=$2		# the line number of exercise that is completed
+	local type=$2		# the type of exercise that is shown
 	local num
 	local n=0
+	echo "Execute show_plan function for file \"$file2\" and type \"$type\""
 
-    echo show plan function
-	env DISPLAY=:0.0 /usr/bin/zenity --text-info \
-    --filename=$week_plan \
-    --text="Week plan of execrcises:" \
-    --width=700 --height=700
+	while IFS=: read -r col1 col2 col3; do
+		if [ "$col1" = "$type" ]; then
+			echo "$n"
+			echo "$col1"
+			echo "$col2"
+			echo "$col3"
+		fi
+	done < $file2 >> "$file2".$$
+	# cat "$file2".$$
+	
+	num=$(DISPLAY=:0.0 /usr/bin/zenity --list \
+		--title="Mark completed exercise:" \
+		--text="Choose an item:" \
+		--column="No." \
+		--column="Exercise type" \
+		--column="Exercise" \
+		--column="Status" \
+		--separator="|" \
+		--width=650 --height=200 \
+		--ok-label "Mark as Completed" \
+		--cancel-label "Main menu" \
+		< "$file2".$$)
+	
+	rm "$file2".$$
+
+	if [ -z "$num" ]
+	then
+		return
+	fi
+	
+	# completed $file2 $num
+	echo $num
 
 }
 
