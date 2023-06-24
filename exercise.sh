@@ -2,6 +2,8 @@
 
 
 # bash script that create and reming on weekly exercises plan
+echo "Session started on `date +%d-%m-%y@%H:%M%2t`"
+echo
 
 
 # Define initial exercise types:
@@ -55,7 +57,4 @@ while grep -q "Not Started" $week_plan
 do
 	echo "list types of excercise (check)"
     list_types
-	
-    exit
-
 done

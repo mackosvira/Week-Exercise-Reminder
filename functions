@@ -101,6 +101,7 @@ function show_plan() {
 	echo "Execute show_plan function for file \"$file2\" and type \"$type\""
 
 	while IFS=: read -r col1 col2 col3; do
+		n=`expr $n + 1`
 		if [ "$col1" = "$type" ]; then
 			echo "$n"
 			echo "$col1"
@@ -130,12 +131,46 @@ function show_plan() {
 		return
 	fi
 	
-	# completed $file2 $num
-	echo $num
+	completed $file2  $num
+	# echo $num
 
 }
 
 
 function completed() {
-    echo mark completed function
+	# complete excerciose by marking as "Completed" and records new time stamp in status list files
+	local file3=$1		# week_plan.txt
+	local line=$2		# the line number of exercise (in week_plan.txt) that is completed
+
+	echo $file3
+	echo $line
+	echo $dir2
+
+	# extract name of exercise type/file 
+	local name="$dir2/`sed -n "$line"p $file3 | cut -d: -f1`"	
+	local exercise="`sed -n "$line"p $file3 | cut -d: -f2`"		# extract name of exercise 
+	local now=$(date +%s)
+	echo "Execute \"completed\" function for exercise:"
+	printf "%4s-\"$exercise\" with line number $line\n"
+
+	echo $name
+	echo $exercise
+	echo $now
+
+	# replace datestamp for particular exercise in exercise file list for particular exercise type 
+	if [ -z "$line" ]
+	then
+		echo "Not a valid line number $line to complete excercise" 
+	else
+	# make new timestamp for particular exercise in particular exercise type list file
+		sed -i "/^$exercise:/ s/:.*$/:`date +%s`/" "$name".txt
+		printf "%4s-correction in list file \"$name.txt\" added time stamp $now\n"
+	# replace "Not Started" with "completed" flag in weekly plan file
+	# tempporary file is used to preserve weekly plan creation date metadata (cp -p)
+		sed "$line s/:[^:]*$/:Completed/" $file3 > tmp.$$
+		cp -p tmp.$$ "$file3"
+		rm tmp.$$
+		printf "%4s-corrections in file \"$file3\" - changed to status \"Completed\"\n"
+	fi
+	echo
 }
